@@ -1,0 +1,12 @@
+version: '3'
+services:
+    discover:
+        image: discover:latest
+        build: ./discover
+        ports:
+            - "8761:8761"
+        networks:
+            - microservico-net
+
+networks:
+    microservico-net:
