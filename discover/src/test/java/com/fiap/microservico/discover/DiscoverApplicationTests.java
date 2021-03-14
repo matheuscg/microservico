@@ -1,10 +1,10 @@
-package com.saga.example.orderservice;
+package com.fiap.microservico.discover;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderserviceApplicationTests {
+class DiscoverApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -1,4 +1,4 @@
-package com.sagaexample.service.discover;
+package com.fiap.microservico.discover;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
