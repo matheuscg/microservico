@@ -13,8 +13,8 @@ FROM openjdk:8-slim
 
 EXPOSE 8080
 
-COPY --from=0 /opt/app/target/discover*.jar /opt/discover/discover.jar
+COPY --from=0 /opt/app/target/supportservice*.jar /opt/supportservice/supportservice.jar
 
-WORKDIR /opt/discover
+WORKDIR /opt/supportservice
 
-CMD [ "java", "-jar", "discover.jar" ]
+CMD ["java", "-jar", "supportservice.jar"]

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
     discover:
         image: discover:latest
@@ -7,16 +7,39 @@ services:
             - "8761:8761"
         networks:
             - microservico-net
+    
+    support:
+        image: supportservice:latest
+        build: ./supportservice
+        depends_on: 
+            supportDB:
+                condition: service_healthy
+        ports:
+            - "8080:8080"
+        environment: 
+            - MYSQL_HOST=supportDB
+        networks:
+            - microservico-net 
+            - microservico-support       
 
     supportDB:
         image: mysql:8
         command: --default-authentication-plugin=mysql_native_password
+        healthcheck:
+            test: ["CMD-SHELL", "mysqladmin ping --silent"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
         ports: 
             - "3306:3306"
         environment: 
             - MYSQL_ROOT_PASSWORD=fiapteste
         networks:
             - microservico-support
+        volumes: 
+            - ./supportservice/src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
+        
+
 
 networks:
     microservico-net:
