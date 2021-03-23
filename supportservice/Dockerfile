@@ -17,4 +17,9 @@ COPY --from=0 /opt/app/target/supportservice*.jar /opt/supportservice/supportser
 
 WORKDIR /opt/supportservice
 
+RUN useradd supportservice
+RUN chown -R supportservice /opt/supportservice
+
+USER supportservice
+
 CMD ["java", "-jar", "supportservice.jar"]

@@ -4,7 +4,7 @@ services:
         image: discover:latest
         build: ./discover
         ports:
-            - "8761:8761"
+            - "7000:8080"
         networks:
             - microservico-net
     
@@ -15,7 +15,7 @@ services:
             supportDB:
                 condition: service_healthy
         ports:
-            - "8080:8080"
+            - "6001:8080"
         environment: 
             - MYSQL_HOST=supportDB
         networks:
