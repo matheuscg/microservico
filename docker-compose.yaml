@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3'
 services:
     config:
         image: configserver:latest
@@ -27,7 +27,8 @@ services:
         ports:
             - "6001:8080"
         environment: 
-            - MYSQL_HOST=supportDB
+            - CONFIG_URL=http://config:8080/
+            - APP_PROFILE=prod
         networks:
             - microservico-net 
             - microservico-support       

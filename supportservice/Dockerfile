@@ -2,10 +2,13 @@ FROM maven:3.6.3-openjdk-8
 
 RUN  mkdir /opt/app
 
-COPY ./pom.xml /opt/app/pom.xml
-COPY ./src /opt/app/src
-
 WORKDIR /opt/app
+
+COPY ./pom.xml /opt/app/pom.xml
+
+RUN mvn dependency:resolve
+
+COPY ./src /opt/app/src
 
 RUN mvn clean package -DskipTests
 
