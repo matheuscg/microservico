@@ -1,7 +1,7 @@
 version: '3.9'
 services:
     config:
-        image: discover:latest
+        image: configserver:latest
         build: ./configserver
         ports:
             - "8000:8080"

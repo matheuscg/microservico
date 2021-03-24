@@ -1,0 +1,22 @@
+FROM maven:3.6.3-openjdk-8
+
+RUN  mkdir /opt/app
+
+COPY ./pom.xml /opt/app/pom.xml
+COPY ./src /opt/app/src
+
+WORKDIR /opt/app
+
+RUN mvn clean package -DskipTests
+
+FROM openjdk:8-slim
+
+VOLUME [ "/opt/configserver/configs" ]
+
+EXPOSE 8080
+
+COPY --from=0 /opt/app/target/configserver*.jar /opt/configserver/configserver.jar
+
+WORKDIR /opt/configserver
+
+CMD [ "java", "-jar", "configserver.jar" ]
