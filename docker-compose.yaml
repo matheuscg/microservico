@@ -17,6 +17,14 @@ services:
             - "7000:8761"
         networks:
             - microservico-net
+
+    broker:
+        image: rabbitmq:3-management
+        ports:
+            - 9000:15672
+            - 5671-5672:5671-5672
+        networks: 
+            - microservico-net
     
     support:
         image: supportservice:latest
