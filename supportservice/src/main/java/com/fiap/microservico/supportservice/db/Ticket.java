@@ -2,18 +2,23 @@ package com.fiap.microservico.supportservice.db;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 public class Ticket {
     @Id
+    @Type(type="uuid-char")
+    @Column(length = 36)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private UUID iduser;
+    private Integer iduser;
 
     private Integer status;
 
@@ -43,11 +48,11 @@ public class Ticket {
         this.status = status;
     }
 
-    public void setIduser(UUID iduser) {
+    public void setIduser(Integer iduser) {
         this.iduser = iduser;
     }
     
-    public UUID getIduser() {
+    public Integer getIduser() {
         return iduser;
     }
 }
