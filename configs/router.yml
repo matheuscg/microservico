@@ -22,7 +22,9 @@ zuul:
     movies-server:
       path: /movies/**
       serviceId: movies-3000
-      #url: http://localhost:3000
+    support-server:
+      path: /support/**
+      serviceId: supportservice
 management:
   endpoints:
     web:

@@ -1,3 +1,6 @@
+server:
+  port: 6001
+
 spring:
   jpa:
     hibernate:
@@ -8,3 +11,10 @@ spring:
       jdbc:mysql://supportDB:3306/ms_support_tickets
     username: supportservice
     password: fiapteste
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://discover:8761/eureka

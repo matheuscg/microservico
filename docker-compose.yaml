@@ -40,7 +40,7 @@ services:
             broker:
                 condition: service_healthy
         ports:
-            - "6001:8080"
+            - "6001:6001"
         environment: 
             - CONFIG_URL=http://config:8080/
             - APP_PROFILE=prod
