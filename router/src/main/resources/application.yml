@@ -1,0 +1,42 @@
+spring:
+  application:
+    name=api-gateway: router
+
+server:
+  port: 8000
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.thoughtmechanix: DEBUG
+
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:7000/eureka/
+#  instance:
+#    preferIpAddress: true
+
+zuul:
+  routes:
+    movies-server:
+      path: /movies/**
+      serviceId: movies
+      #url: http://localhost:3000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
