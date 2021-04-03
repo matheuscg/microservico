@@ -10,11 +10,55 @@ import  {ErrorHandler} from "./middleware/ErrorHandler"
 import {Movie} from "./entity/Movie";
 import * as ip from "ip";
 import * as configClient from "cloud-config-client";
-
-
+import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 (async () => {
-    const connection = await createConnection()
+    // Configuration Server
+    let eurekaHost;
+    let eurekaPort;
+    let dbHost;
+    let dbPort;
+    await configClient.load({
+        endpoint: process.env["CONFIG_URL"] ? process.env["CONFIG_URL"] : "http://localhost:8000",
+        name: "movies",
+        profiles: process.env["APP_PROFILE"] ? process.env["APP_PROFILE"] : "default"
+    }).then((config: configClient.Config) => {
+        eurekaHost = config.get("spring.eureka.host");
+        eurekaPort = config.get("spring.eureka.port");
+        dbHost = config.get("typeorm.database.host");
+        dbPort = +config.get("typeorm.database.port");
+    }).catch((error) => {
+        console.error(error)
+    })
+
+    // TypeORM Configuration`
+    const configORM : PostgresConnectionOptions = {
+        name: "movies",
+        type: "postgres",
+        host: dbHost,
+        port: dbPort,
+        username: "admin",
+        password: "admin",
+        database: "movies",
+        synchronize: true,
+        logging: false,
+        entities: [
+           "src/entity/**/*.ts"
+        ],
+        migrations: [
+           "src/migration/**/*.ts"
+        ],
+        subscribers: [
+           "src/subscriber/**/*.ts"
+        ],
+        cli: {
+           entitiesDir: "src/entity",
+           migrationsDir: "src/migration",
+           subscribersDir: "src/subscriber"
+        }
+     };
+
+    const connection = await createConnection(configORM)
     const app = express();
     app.locals.database = connection;
     app.use(bodyParser.json());
@@ -47,19 +91,7 @@ import * as configClient from "cloud-config-client";
         return next();
     });
 
-    // Configuration Server
-    let eurekaHost;
-    let eurekaPort;
-    await configClient.load({
-        endpoint: process.env["CONFIG_URL"] ? process.env["CONFIG_URL"] : "http://localhost:8000",
-        name: "movies",
-        profiles: process.env["APP_PROFILE"] ? process.env["APP_PROFILE"] : "default"
-    }).then((config: configClient.Config) => {
-        eurekaHost = config.get("spring.eureka.host");
-        eurekaPort = config.get("spring.eureka.port");
-    }).catch((error) => {
-        console.error(error)
-    })
+    
     
     app.listen(3000, () => {
         const eureka = new Eureka({

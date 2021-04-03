@@ -2,3 +2,8 @@ spring:
   eureka:
     host: localhost
     port: 7000
+
+typeorm:
+  database:
+    host: localhost
+    port: 15432

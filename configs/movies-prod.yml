@@ -2,3 +2,8 @@ spring:
   eureka:
     host: discover
     port: 8761
+
+typeorm:
+  database:
+    host: moviesDB
+    port: 5432

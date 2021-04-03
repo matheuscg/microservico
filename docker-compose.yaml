@@ -76,6 +76,20 @@ services:
         volumes: 
             - ./supportservice/src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
 
+    movies:
+        image: movies:latest
+        build: ./movies
+        environment:
+            - CONFIG_URL=http://config:8080/
+            - APP_PROFILE=prod
+        ports:
+            - "3000:3000"  
+        depends_on:
+            - moviesDB
+        networks:
+            - microservice-movie-network
+            - microservico-net
+
     moviesDB:
         image: postgres
         environment:
