@@ -1,0 +1,4 @@
+spring:
+  eureka:
+    host: discover
+    port: 8761

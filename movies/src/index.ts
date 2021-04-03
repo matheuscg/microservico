@@ -9,6 +9,7 @@ import router from "./router";
 import  {ErrorHandler} from "./middleware/ErrorHandler"
 import {Movie} from "./entity/Movie";
 import * as ip from "ip";
+import * as configClient from "cloud-config-client";
 
 
 
@@ -45,8 +46,22 @@ import * as ip from "ip";
         res.locals.logger.info({ res: { status: res.statusCode, message: res.statusMessage } }, 'RESPONSE:::status');
         return next();
     });
-    app.listen(3000, () => {
 
+    // Configuration Server
+    let eurekaHost;
+    let eurekaPort;
+    await configClient.load({
+        endpoint: process.env["CONFIG_URL"] ? process.env["CONFIG_URL"] : "http://localhost:8000",
+        name: "movies",
+        profiles: process.env["APP_PROFILE"] ? process.env["APP_PROFILE"] : "default"
+    }).then((config: configClient.Config) => {
+        eurekaHost = config.get("spring.eureka.host");
+        eurekaPort = config.get("spring.eureka.port");
+    }).catch((error) => {
+        console.error(error)
+    })
+    
+    app.listen(3000, () => {
         const eureka = new Eureka({
             instance: {
                app: 'MOVIES',
@@ -65,15 +80,14 @@ import * as ip from "ip";
             },
             logger: createLogger({name: 'eureka'}),
             eureka: {
-                host: 'localhost',
-                port: 7000,
+                host: eurekaHost,
+                port: eurekaPort,
                 servicePath: '/eureka/apps/'
             }
         });
         eureka.logger.level('debug');
         eureka.start()
     });
-    console.log(`Express publish on http://${ip.address()}:3000`);
     console.log("Express server has started on port 3000. Open http://localhost:3000 to see results");
 })();
 

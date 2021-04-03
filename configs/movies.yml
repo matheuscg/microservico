@@ -1,0 +1,4 @@
+spring:
+  eureka:
+    host: localhost
+    port: 7000
