@@ -65,6 +65,32 @@ services:
         volumes: 
             - ./supportservice/src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
 
+    moviesDB:
+        image: postgres
+        environment:
+            POSTGRES_PASSWORD: "admin"
+            POSTGRES_DB: "movies"
+            POSTGRES_USER: "admin"
+        ports:
+            - "15432:5432"  
+        volumes:
+            - /var/lib/postgresql/data
+        networks:
+            -  microservice-movie-network
+
+    movieDB-admin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+            PGADMIN_DEFAULT_PASSWORD: "admin"
+        ports:
+            - "16543:80"
+        depends_on:
+            - moviesDB
+        networks:
+            -  microservice-movie-network
+
 networks:
     microservico-net:
     microservico-support:
+    microservice-movie-network:
