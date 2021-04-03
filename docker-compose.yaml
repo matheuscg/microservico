@@ -20,6 +20,11 @@ services:
 
     broker:
         image: rabbitmq:3-management
+        healthcheck:
+            test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+            interval: 10s
+            timeout: 2s
+            retries: 3
         ports:
             - 9000:15672
             - 5671-5672:5671-5672
@@ -31,6 +36,8 @@ services:
         build: ./supportservice
         depends_on: 
             supportDB:
+                condition: service_healthy
+            broker:
                 condition: service_healthy
         ports:
             - "6001:8080"
