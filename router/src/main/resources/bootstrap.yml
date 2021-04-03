@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: router
+  cloud:
+    enabled: true
+    config:
+      uri: ${CONFIG_URL:http://localhost:8000/}
+  profiles:
+    active: ${APP_PROFILE:default}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"   

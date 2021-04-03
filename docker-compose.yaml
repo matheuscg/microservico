@@ -48,6 +48,17 @@ services:
             - microservico-net 
             - microservico-support       
 
+    router:
+        image: router:latest
+        build: ./router
+        ports:
+            - "4000:4000"
+        environment: 
+            - CONFIG_URL=http://config:8080/
+            - APP_PROFILE=prod
+        networks:
+            - microservico-net 
+
     supportDB:
         image: mysql:8
         command: --default-authentication-plugin=mysql_native_password

@@ -1,0 +1,38 @@
+server:
+  port: 4000
+
+logging:
+  level:
+    com.netflix: DEBUG
+    org.springframework.web: DEBUG
+    com.thoughtmechanix: DEBUG
+
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:7000/eureka
+#  instance:
+#    preferIpAddress: true
+
+zuul:
+  routes:
+    movies-server:
+      path: /movies/**
+      serviceId: movies-3000
+      #url: http://localhost:3000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
