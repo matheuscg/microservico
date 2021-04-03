@@ -8,6 +8,7 @@ import {NextFunction, Request, Response} from "express";
 import router from "./router";
 import  {ErrorHandler} from "./middleware/ErrorHandler"
 import {Movie} from "./entity/Movie";
+import * as ip from "ip";
 
 
 
@@ -48,16 +49,15 @@ import {Movie} from "./entity/Movie";
 
         const eureka = new Eureka({
             instance: {
-               app: 'movies',
-               instanceId: 'movies-3000',
-               hostName: 'localhost',
-               ipAddr: '0.0.0.0',
-               statusPageUrl: 'http://localhost:3000',
+               app: 'MOVIES',
+               instanceId: 'movies:3000',
+               hostName: ip.address(),
+               ipAddr: ip.address(),
                 port: {
                     '$': 3000,
                     '@enabled': 'true',
                 },
-                vipAddress: 'localhost',
+                vipAddress: "movies",
                 dataCenterInfo: {
                     '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
                     name: 'MyOwn',
@@ -73,6 +73,7 @@ import {Movie} from "./entity/Movie";
         eureka.logger.level('debug');
         eureka.start()
     });
+    console.log(`Express publish on http://${ip.address()}:3000`);
     console.log("Express server has started on port 3000. Open http://localhost:3000 to see results");
 })();
 

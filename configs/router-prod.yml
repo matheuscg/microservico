@@ -21,7 +21,7 @@ zuul:
   routes:
     movies-server:
       path: /movies/**
-      serviceId: movies-3000
+      serviceId: movies
     support-server:
       path: /support/**
       serviceId: supportservice
