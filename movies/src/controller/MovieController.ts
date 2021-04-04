@@ -6,9 +6,9 @@ import {View} from "../entity/View";
 
 export class MovieController {
 
-    private movieRepository = getConnection().getRepository(Movie);
-    private viewRepository = getConnection().getRepository(View);
-    private categoryRepository = getConnection().getRepository(Category);
+    private movieRepository = getConnection("movies").getRepository(Movie);
+    private viewRepository = getConnection("movies").getRepository(View);
+    private categoryRepository = getConnection("movies").getRepository(Category);
     async all() {
         return this.movieRepository.find();
     }

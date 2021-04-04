@@ -4,7 +4,7 @@ import {Category} from "../entity/Category";
 
 export class CategoryController {
 
-    private categoryRepository = getConnection().getRepository(Category);
+    private categoryRepository = getConnection("movies").getRepository(Category);
 
     async all() {
         return this.categoryRepository.find();

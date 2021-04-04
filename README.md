@@ -41,6 +41,12 @@ A primeira vez vai fazer os build de todas as aplicações, esse processo deve d
 
 Essa seção explica/exemplifica como testar/executar as funcionalidades do projeto.
 
+### Listar todos os gêneros
+
+```
+$ curl http://localhost:4000/movies/v1/categories
+```
+
 ### Consultar filme por gênero
 
 ```
@@ -80,7 +86,18 @@ $ curl http://localhost:4000/movies
 ### Abrir um ticket de supporte
 
 ```
-$ curl http://localhost:4000/support
+$ curl --location --request POST 'localhost:4000/support/api/v1/support/ticket' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "iduser": 1,
+    "description": "não consigo visualizar nenhum filme no catalogo"
+}'
+```
+
+### Consultar tickets
+
+```
+$ curl --location --request GET 'localhost:4000/support/api/v1/support/ticket'
 ```
 
 ### Consultar filmes assistidos por um usuário especifico
