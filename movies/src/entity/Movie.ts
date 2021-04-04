@@ -26,4 +26,7 @@ export class Movie {
 
     @OneToMany(() => View, view => view.movie)
     views: View[];
+
+    @Column()
+    keywords: string;
 }

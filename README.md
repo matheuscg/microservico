@@ -50,34 +50,52 @@ $ curl http://localhost:4000/movies/v1/categories
 ### Consultar filme por gênero
 
 ```
-$ curl http://localhost:4000/movies
+$ curl curl http://localhost:4000/movies/v1/categories/{idgenre}
+```
+
+### Listar filmes
+
+```
+$ curl http://localhost:4000/movies/v1/movies
 ```
 
 ### Consultar filme especifico
 
 ```
-$ curl http://localhost:4000/movies
+$ curl http://localhost:4000/movies/{idmovie}
 ```
 
-### Consultar votar em filme
+### Favoritar em filme
 
 ```
-$ curl http://localhost:4000/movies
+$ curl --location --request POST 'localhost:4000/users/addfavorite' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "iduser": 1,
+    "idmovie": 1
+}'
 ```
 
 ### Salvar um filme para mais tarde
 
 ```
-$ curl http://localhost:4000/movies
+$ curl --location --request POST 'localhost:4000/users/addwatchlist' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "iduser": 1,
+    "idmovie": 1
+}'
 ```
 
 ### Consultar filme por palavra chave
 
 ```
-$ curl http://localhost:4000/movies
+$ curl "http://localhost:4000/movies/v1/movies?keyword={keyword}"
 ```
 
-### Listar filmes mais visto por gênero
+### Listar filmes mais visto de um determinado gênero
+
+TODO:
 
 ```
 $ curl http://localhost:4000/movies
@@ -101,6 +119,8 @@ $ curl --location --request GET 'localhost:4000/support/api/v1/support/ticket'
 ```
 
 ### Consultar filmes assistidos por um usuário especifico
+
+TODO:
 
 ```
 $ curl http://localhost:4000/movies

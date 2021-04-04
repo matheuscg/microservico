@@ -6,10 +6,18 @@ const MoviesRouter = Router();
 const MOVIE_PATH = "/v1/movies";
 MoviesRouter.get(MOVIE_PATH, async ( req:Request, res: Response, next:NextFunction)=>{
     const logger = res.locals.logger;
+    const { keyword } = req.query;
+    
     try{
         const Movie = new MovieController();
         const movies = await Movie.all()
-        res.json(movies);
+        if (keyword === undefined) {            
+            res.json(movies);
+        } else {
+            const result = movies.filter(movie => movie.keywords.indexOf(`${keyword}`) !== -1)
+            res.json(result)
+        }
+        
         next()
     }catch (exception){
         logger.info(exception, "Ocorreu um erro")
