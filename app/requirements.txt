@@ -3,4 +3,4 @@ mysql-connector
 pymysql
 flask-cors
 flask-mysql
-flask-eureka
+py_eureka_client
