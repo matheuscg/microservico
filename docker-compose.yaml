@@ -131,5 +131,35 @@ services:
         networks:
             -  microservico-net
 
+    userdb:
+        image: mariadb:focal
+        command: '--default-authentication-plugin=mysql_native_password'
+        ports:
+            - 3307:3306
+        restart: always
+        secrets:
+            - db-password
+        volumes:
+            - ./db/user.sql:/docker-entrypoint-initdb.d/user.sql
+        networks:
+            - microservico-net
+        environment:
+            - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+
+    app:
+        depends_on:
+            - userdb
+        build: app
+        restart: always
+        secrets:
+            - db-password
+        networks:
+            - microservico-net
+        ports:
+            - 5000:5000
+
 networks:
     microservico-net:
+secrets:
+    db-password:
+        file: db/password.txt
