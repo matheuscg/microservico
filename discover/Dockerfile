@@ -11,6 +11,8 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:8-slim
 
+RUN apt-get update -y && apt-get upgrade -y && apt-get install curl -y
+
 EXPOSE 8080
 
 COPY --from=0 /opt/app/target/discover*.jar /opt/discover/discover.jar
