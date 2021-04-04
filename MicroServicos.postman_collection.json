@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "ce447ca1-061c-40fb-b3c4-d74531e13787",
+		"name": "Micro Serviços",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Ticket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"iduser\": 1,\n    \"description\": \"não consigo visualizar nenhum filme no catalogo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:4000/support/api/v1/support/ticket"
+			},
+			"response": []
+		},
+		{
+			"name": "List Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/support/api/v1/support/ticket",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"support",
+						"api",
+						"v1",
+						"support",
+						"ticket"
+					],
+					"query": [
+						{
+							"key": "iduser",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ticket",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:4000/support/api/v1/support/ticket/62cdc23a-77b7-41c7-a269-ffe9f5c48623"
+			},
+			"response": []
+		},
+		{
+			"name": "List Genres",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:4000/movies/v1/categories"
+			},
+			"response": []
+		},
+		{
+			"name": "List Movies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:4000/movies/v1/movies"
+			},
+			"response": []
+		},
+		{
+			"name": "Find Movie by Keyword",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/movies/v1/movies?keyword=teste",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"movies",
+						"v1",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "teste"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:4000/movies/v1/movies/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite Movie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"iduser\": 1,\n    \"idmovie\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:4000/users/addfavorite"
+			},
+			"response": []
+		},
+		{
+			"name": "Save for Later",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"iduser\": 1,\n    \"idmovie\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:4000/users/addwatchlist"
+			},
+			"response": []
+		}
+	]
+}

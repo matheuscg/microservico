@@ -41,6 +41,8 @@ A primeira vez vai fazer os build de todas as aplicações, esse processo deve d
 
 Essa seção explica/exemplifica como testar/executar as funcionalidades do projeto.
 
+Além dos comandos CURL é possivel chamas as apis usando o Postman, para isso basta importar o arquivo [MicroServicos.postman_collection.json](MicroServicos.postman_collection.json)
+
 ### Listar todos os gêneros
 
 ```
