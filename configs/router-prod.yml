@@ -31,6 +31,9 @@ zuul:
     support-server:
       path: /support/**
       serviceId: supportservice
+    users-server:
+      path: /users/**
+      serviceId: users
 management:
   endpoints:
     web:

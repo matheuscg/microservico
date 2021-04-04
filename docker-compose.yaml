@@ -157,6 +157,10 @@ services:
             - microservico-net
         ports:
             - 5000:5000
+        environment:
+            - EUREKA_INSTANCE_HOSTNAME=discover
+            - EUREKA_INSTANCE_PORT=8761
+            - EUREKA_SERVICE_URL=http://discover:8761
 
 networks:
     microservico-net:

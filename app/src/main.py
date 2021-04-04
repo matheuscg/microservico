@@ -3,6 +3,7 @@ from app import app
 from config import mysql
 from flask import jsonify
 from flask import flash, request
+from flask_eureka.eureka import eureka_bp
 
 #user table CRUD
 @app.route('/adduser', methods=['POST'])
@@ -257,6 +258,8 @@ def not_found(error=None):
     respone = jsonify(message)
     respone.status_code = 404
     return respone
+
+app.register_blueprint(eureka_bp)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
