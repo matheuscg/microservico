@@ -7,6 +7,11 @@ logging:
     org.springframework.web: DEBUG
     com.thoughtmechanix: DEBUG
 
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 eureka:
   client:
@@ -18,6 +23,7 @@ eureka:
 #    preferIpAddress: true
 
 zuul:
+  ignoredServices: "*"
   routes:
     movies-server:
       path: /movies/**
@@ -38,3 +44,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000
+
+ribbon:
+  ReadTimeout: 60000

@@ -8,6 +8,7 @@
    },
    "devDependencies": {
       "@types/bunyan": "^1.8.6",
+      "@types/eureka-js-client": "^4.5.2",
       "@types/ip": "^1.1.0",
       "@types/node": "^8.0.29",
       "ts-node": "3.3.0",

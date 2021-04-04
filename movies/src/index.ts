@@ -9,6 +9,7 @@ import router from "./router";
 import  {ErrorHandler} from "./middleware/ErrorHandler"
 import {Movie} from "./entity/Movie";
 import * as ip from "ip";
+import * as os from "os";
 import * as configClient from "cloud-config-client";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
@@ -96,15 +97,22 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
     app.listen(3000, () => {
         const eureka = new Eureka({
             instance: {
-               app: 'MOVIES',
-               instanceId: 'movies:3000',
-               hostName: ip.address(),
-               ipAddr: ip.address(),
+                app: 'MOVIES',
+                instanceId: `${os.hostname()}:movies:3000`,
+                hostName: ip.address(),
+                ipAddr: ip.address(),
+                homePageUrl: `http://${ip.address()}:3000/`,
+                statusPageUrl: `http://${ip.address()}:3000/`,
+                healthCheckUrl: `http://${ip.address()}:3000/`,
+                metadata: {
+                    "management.port": "3000"
+                },
                 port: {
                     '$': 3000,
-                    '@enabled': 'true',
+                    '@enabled': true,
                 },
                 vipAddress: "movies",
+                secureVipAddress: "movies",
                 dataCenterInfo: {
                     '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
                     name: 'MyOwn',
@@ -117,7 +125,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
                 servicePath: '/eureka/apps/'
             }
         });
-        eureka.logger.level('debug');
+        // eureka.logger.level('debug');
         eureka.start()
     });
     console.log("Express server has started on port 3000. Open http://localhost:3000 to see results");

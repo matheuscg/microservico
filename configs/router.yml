@@ -18,6 +18,7 @@ eureka:
 #    preferIpAddress: true
 
 zuul:
+  ignoredServices: "*"
   routes:
     movies-server:
       path: /movies/**
@@ -38,3 +39,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000
+
+ribbon:
+  ReadTimeout: 60000
