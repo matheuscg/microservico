@@ -44,6 +44,8 @@ services:
                 condition: service_healthy
             broker:
                 condition: service_healthy
+            router:
+                condition: service_healthy
         ports:
             - "6001:6001"
         environment: 
@@ -51,11 +53,19 @@ services:
             - APP_PROFILE=prod
         networks:
             - microservico-net 
-            - microservico-support       
+            - microservico-support
 
     router:
         image: router:latest
         build: ./router
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:4000/healthcheck"]
+            interval: 10s
+            timeout: 2s
+            retries: 3
+        depends_on: 
+            config: 
+                condition: service_healthy
         ports:
             - "4000:4000"
         environment: 
@@ -90,7 +100,10 @@ services:
         ports:
             - "3000:3000"  
         depends_on:
-            - moviesDB
+            moviesDB:
+                condition: service_healthy
+            router:
+                condition: service_healthy
         networks:
             - microservice-movie-network
             - microservico-net
@@ -101,22 +114,15 @@ services:
             POSTGRES_PASSWORD: "admin"
             POSTGRES_DB: "movies"
             POSTGRES_USER: "admin"
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U admin"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
         ports:
             - "15432:5432"  
         volumes:
             - /var/lib/postgresql/data
-        networks:
-            -  microservice-movie-network
-
-    movieDB-admin:
-        image: dpage/pgadmin4
-        environment:
-            PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
-            PGADMIN_DEFAULT_PASSWORD: "admin"
-        ports:
-            - "16543:80"
-        depends_on:
-            - moviesDB
         networks:
             -  microservice-movie-network
 
