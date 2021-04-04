@@ -11,6 +11,8 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:8-slim
 
+RUN apt-get update -y && apt-get upgrade -y && apt-get install curl -y
+
 VOLUME [ "/opt/configserver/configs" ]
 
 EXPOSE 8080

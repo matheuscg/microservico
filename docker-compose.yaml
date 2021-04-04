@@ -3,6 +3,11 @@ services:
     config:
         image: configserver:latest
         build: ./configserver
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
+            interval: 10s
+            timeout: 2s
+            retries: 3
         ports:
             - "8000:8080"
         volumes: 
