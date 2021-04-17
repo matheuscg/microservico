@@ -14,6 +14,10 @@ services:
             - ./configs:/opt/configserver/configs
         networks:
             - microservico-net
+        deploy:
+          placement:
+            constraints:
+              - node.role == manager
 
     discover:
         image: discover:latest
@@ -27,6 +31,10 @@ services:
             - "7000:8761"
         networks:
             - microservico-net
+        deploy:
+          placement:
+            constraints:
+              - node.role == manager
 
     broker:
         image: rabbitmq:3-management
