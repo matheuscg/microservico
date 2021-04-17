@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
     config:
         image: configserver:latest
@@ -53,12 +53,9 @@ services:
         image: supportservice:latest
         build: ./supportservice
         depends_on: 
-            - supportDB:
-                condition: service_healthy
-            - broker:
-                condition: service_healthy
-            - router: 
-                condition: service_healthy
+            - supportDB
+            - broker
+            - router
         ports:
             - "6001:6001"
         environment: 
@@ -76,10 +73,8 @@ services:
             timeout: 2s
             retries: 3
         depends_on: 
-            - config: 
-                condition: service_healthy
-            - discover: 
-                condition: service_healthy
+            - config
+            - discover 
         ports:
             - "4000:4000"
         environment: 
@@ -114,10 +109,8 @@ services:
         ports:
             - "3000:3000"  
         depends_on:
-            - moviesDB:
-                condition: service_healthy
-            - router: 
-                condition: service_healthy
+            - moviesDB
+            - router 
         networks:
             - microservico-net         
 
@@ -155,6 +148,7 @@ services:
             - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
 
     app:
+        image: app:latest
         depends_on:
             - userdb
         build: app
@@ -164,7 +158,7 @@ services:
         networks:
             - microservico-net
         ports:
-            - 5000:5000
+            - 5010:5010
 
 networks:
     microservico-net:

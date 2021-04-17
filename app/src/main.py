@@ -260,5 +260,5 @@ def not_found(error=None):
     return respone
 
 if __name__ == '__main__':
-    eureka_client.init(eureka_server="http://discover:8761/eureka", app_name="users", instance_port=5000)
+    eureka_client.init(eureka_server="http://discover:8761/eureka", app_name="users", instance_port=5010)
     app.run(debug=True, host='0.0.0.0', port=5000)

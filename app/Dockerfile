@@ -3,5 +3,5 @@ WORKDIR /src
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY ./src /src
-EXPOSE 5000
+EXPOSE 5010
 CMD python main.py
