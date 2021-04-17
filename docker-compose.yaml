@@ -53,11 +53,11 @@ services:
         image: supportservice:latest
         build: ./supportservice
         depends_on: 
-            supportDB:
+            - supportDB:
                 condition: service_healthy
-            broker:
+            - broker:
                 condition: service_healthy
-            router: 
+            - router: 
                 condition: service_healthy
         ports:
             - "6001:6001"
@@ -76,9 +76,9 @@ services:
             timeout: 2s
             retries: 3
         depends_on: 
-            config: 
+            - config: 
                 condition: service_healthy
-            discover: 
+            - discover: 
                 condition: service_healthy
         ports:
             - "4000:4000"
@@ -114,9 +114,9 @@ services:
         ports:
             - "3000:3000"  
         depends_on:
-            moviesDB:
+            - moviesDB:
                 condition: service_healthy
-            router: 
+            - router: 
                 condition: service_healthy                
         networks:
             - microservico-net         
